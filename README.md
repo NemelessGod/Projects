@@ -41,6 +41,8 @@ powershell -ExecutionPolicy Bypass -File scripts/windows.ps1 client -Godot "C:\T
 powershell -ExecutionPolicy Bypass -File scripts/windows.ps1 test
 ```
 
+Если PyPI выдаёт `CERTIFICATE_VERIFY_FAILED`, скачайте [офлайн-библиотеки для Python 3.12 Windows x64](https://github.com/NemelessGod/Projects/raw/refs/heads/main/downloads/SpinKingdom-Windows-Dependencies.zip). Распакуйте содержимое **в корень SpinKingdom**, чтобы появилась папка `windows-wheels`; разрешите замену `scripts/windows.ps1`. Повторите `setup`: обновлённый скрипт установит библиотеки из локальных wheels через `--no-index`, без запросов к PyPI. Этот архив не заменяет Python и Docker и не исправляет системный сертификат; загрузка Docker image при первом запуске по-прежнему требует сети.
+
 Windows-скрипт использует Docker named volume `spin-kingdom-data` и localhost port mapping; данные сохраняются после перезапуска. Trust-аутентификация предназначена только для локальной разработки. Bash-скрипты не требуются. Клиент можно также открыть через `client/project.godot` в редакторе.
 
 Для сборки установите **export templates 4.6.3** через Godot → Manage Export Templates:

@@ -15,7 +15,11 @@ $env:DATABASE_URL = "postgresql+psycopg://postgres@127.0.0.1:55432/spin_kingdom"
 switch ($Action) {
     "setup" {
         Run "py" @("-3.12", "-m", "venv", ".venv")
-        Run $Python @("-m", "pip", "install", "-r", "backend/requirements.lock")
+        if (Test-Path "windows-wheels") {
+            Run $Python @("-m", "pip", "install", "--no-index", "--find-links", "windows-wheels", "-r", "backend/requirements.lock")
+        } else {
+            Run $Python @("-m", "pip", "install", "-r", "backend/requirements.lock")
+        }
     }
     "server" {
         $Exists = docker ps -a --filter "name=^/spin-kingdom-db$" --format "{{.Names}}"
