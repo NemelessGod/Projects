@@ -23,18 +23,23 @@ if [[ ! -x "$ANDROID_HOME/build-tools/36.0.0/apksigner" ]]; then
   "$TOOLS/bin/sdkmanager" --sdk_root="$ANDROID_HOME" 'platform-tools' 'build-tools;36.0.0' 'platforms;android-36'
 fi
 TEMPLATES="$XDG_DATA_HOME/godot/export_templates/4.6.3.stable"
-if [[ ! -f "$TEMPLATES/android_debug.apk" ]]; then
+if [[ ! -f "$TEMPLATES/android_debug.apk" || ! -f "$TEMPLATES/windows_debug_x86_64.exe" ]]; then
   archive="$SPIN_TOOLING_DIR/Godot_v4.6.3-stable_export_templates.tpz"
   curl --fail --location --silent --show-error \
     https://github.com/godotengine/godot/releases/download/4.6.3-stable/SHA512-SUMS.txt \
     -o "$SPIN_TOOLING_DIR/godot-SHA512-SUMS.txt"
-  curl --fail --location --silent --show-error \
-    https://github.com/godotengine/godot/releases/download/4.6.3-stable/Godot_v4.6.3-stable_export_templates.tpz \
-    -o "$archive"
+  if [[ ! -f "$archive" ]]; then
+    curl --fail --location --silent --show-error \
+      https://github.com/godotengine/godot/releases/download/4.6.3-stable/Godot_v4.6.3-stable_export_templates.tpz \
+      -o "$archive"
+  fi
   (cd "$SPIN_TOOLING_DIR" && rg 'Godot_v4.6.3-stable_export_templates.tpz$' godot-SHA512-SUMS.txt | sha512sum -c -)
   extract_dir="$(mktemp -d "$SPIN_TOOLING_DIR/templates.XXXXXX")"
   unzip -q "$archive" 'templates/android_debug.apk' 'templates/android_release.apk' \
-    'templates/linux_debug.x86_64' 'templates/linux_release.x86_64' 'templates/version.txt' -d "$extract_dir"
+    'templates/linux_debug.x86_64' 'templates/linux_release.x86_64' \
+    'templates/windows_debug_x86_64.exe' 'templates/windows_release_x86_64.exe' \
+    'templates/windows_debug_x86_64_console.exe' 'templates/windows_release_x86_64_console.exe' \
+    'templates/version.txt' -d "$extract_dir"
   mkdir -p "$TEMPLATES"
   cp "$extract_dir/templates/"* "$TEMPLATES/"
   rm -r "$extract_dir"
