@@ -7,7 +7,7 @@
 - [x] PHASE 3: authoritative weighted slot, energy/regeneration, RewardService, economy ledger, replay safety.
 - [x] PHASE 4: five buildings/world, server prices, XP levels, two worlds and one-time completion.
 - [x] Validated remote configuration and compatible revision publishing CLI.
-- [x] 28 PostgreSQL-backed/unit tests; Godot HTTP end-to-end + restart smoke.
+- [x] 29 PostgreSQL-backed/unit tests; Godot HTTP end-to-end + restart smoke.
 - [x] Frozen Python dependency versions, setup/start/test/build scripts, database backup/restore verification.
 - [IN PROGRESS] Save reusable environment draft and milestone evidence; commit stable client.
 - [ ] PHASE 5: attacks, shields, raids, single-use server action tickets, transactional defender updates.

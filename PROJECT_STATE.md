@@ -12,7 +12,7 @@ Godot 4.6.3 portrait island/slot/profile UI, vector symbols and island, tutorial
 
 ## Verified
 
-28 backend tests pass against isolated PostgreSQL 17 `_test` DB (unit, replay/concurrency, authoritative validation, pricing/XP, worlds, expiry/ban and config boundaries). Ruff + GDScript formatting/lint pass. Godot headless real client E2E passes: guest -> spin -> upgrade -> ambiguous-response replay -> restart restore. Native Android debug export passes, arm64/x86_64 APK signature verified. Linux debug executable built and launched. Unreachable-server transport test passes without JSON parsing errors. Original SQL and custom-format backups saved under ignored `.local/backups`; data moved to bind-mounted `.local/postgres` and restored; health/profile rechecked.
+29 backend tests pass against isolated PostgreSQL 17 `_test` DB (unit, replay/concurrency, authoritative validation, pricing/XP, worlds, expiry/ban and config boundaries). Ruff + GDScript formatting/lint pass. Godot headless real client E2E passes: guest -> spin -> upgrade -> ambiguous-response replay -> restart restore. Native Android debug export passes, arm64/x86_64 APK signature verified. Linux debug executable built and launched. Unreachable-server transport test passes without JSON parsing errors. Original SQL and custom-format backups saved under ignored `.local/backups`; data moved to bind-mounted `.local/postgres` and restored; health/profile rechecked.
 
 ## Remaining / known limitations
 

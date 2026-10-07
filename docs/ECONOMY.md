@@ -12,3 +12,5 @@ Authoritative source: active `game_config.body` row. Seed: `backend/config/econo
 Currency ledger includes initial grants, regeneration, spin debits/rewards, construction spending, level rewards and world rewards. Ledger balances must reconcile; failed operations roll back everything. XP is authoritative player progression with immutable operation responses, not spendable currency.
 
 Balance is deliberately small for validation, not commercial tuning. Before live ops: simulate progression distribution, payout variance, economy sources/sinks, full-world costs, retention and abuse. No premium spending, real-money products, ads or rewards for client-reported achievements exist yet.
+
+Appending worlds after campaign completion advances completed players on their next authoritative state read. The previous completion reward is not issued again. This is covered by an integration test.

@@ -28,7 +28,8 @@ def client():
                 "TRUNCATE spin_history,economy_ledger,operations,player_buildings,player_energy,player_wallets,sessions,players CASCADE"
             )
         )
-        conn.execute(text("UPDATE game_config SET active=(revision=1)"))
+        conn.execute(text("DELETE FROM game_config WHERE revision<>1"))
+        conn.execute(text("UPDATE game_config SET active=true WHERE revision=1"))
     with TestClient(app) as c:
         yield c
 

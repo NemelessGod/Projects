@@ -67,7 +67,7 @@ docker exec spin-kingdom-db pg_dump -Fc -p 55432 -U postgres spin_kingdom > .loc
 Сначала запустите `scripts/start.sh`, затем:
 
 ```bash
-scripts/test.sh             # formatter/linter + 28 backend tests
+scripts/test.sh             # formatter/linter + 29 backend tests
 scripts/client_smoke.sh     # новый тестовый гость, слот, upgrade, lost-response replay, restart
 ```
 

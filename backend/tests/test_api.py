@@ -219,3 +219,38 @@ def test_expired_and_banned_session(client, guest):
             {"p": player},
         )
     assert client.get("/v1/player", headers=headers).status_code == 401
+
+
+def test_appended_world_unlocks_without_second_completion_reward(client, guest):
+    from copy import deepcopy
+
+    player, headers, _ = guest
+    config = client.get("/v1/config", headers=headers).json()
+    final = config["worlds"][-1]
+    with engine.begin() as conn:
+        conn.execute(text("UPDATE players SET world_index=1 WHERE id=:p"), {"p": player})
+        for building in final["buildings"]:
+            conn.execute(
+                text(
+                    "INSERT INTO player_buildings(player_id,world_id,building_id,level) VALUES(:p,:w,:b,3)"
+                ),
+                {"p": player, "w": final["id"], "b": building["id"]},
+            )
+    before = client.get("/v1/player", headers=headers).json()
+    assert before["campaign_complete"]
+    appended = deepcopy(final)
+    appended["id"] = "dawnreach"
+    config["revision"] = 3
+    config["worlds"].append(appended)
+    with engine.begin() as conn:
+        conn.execute(text("UPDATE game_config SET active=false"))
+        conn.execute(
+            text("INSERT INTO game_config(revision,body,active) VALUES(3,CAST(:b AS jsonb),true)"),
+            {"b": json.dumps(config)},
+        )
+    current = client.get("/v1/player", headers=headers).json()
+    assert current["world_index"] == 2 and current["world"]["id"] == "dawnreach"
+    assert not current["campaign_complete"]
+    assert current["coins"] == before["coins"] and current["spins"] == before["spins"]
+    assert all(b["level"] == 0 for b in current["world"]["buildings"])
+    assert client.get("/v1/player", headers=headers).json()["world_index"] == 2

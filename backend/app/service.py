@@ -79,7 +79,7 @@ def create_guest(conn):
 
 
 def load_state(conn, player_id, config, now):
-    player = (
+    player = dict(
         query(conn, "SELECT * FROM players WHERE id=:p FOR UPDATE", p=player_id).mappings().one()
     )
     if player["banned"]:
@@ -115,16 +115,29 @@ def load_state(conn, player_id, config, now):
             b=old,
             e=energy["spins"],
         )
-    world = config["worlds"][player["world_index"]]
-    built = {
-        r["building_id"]: r["level"]
-        for r in query(
+    while True:
+        world = config["worlds"][player["world_index"]]
+        built = {
+            r["building_id"]: r["level"]
+            for r in query(
+                conn,
+                "SELECT building_id,level FROM player_buildings WHERE player_id=:p AND world_id=:w",
+                p=player_id,
+                w=world["id"],
+            ).mappings()
+        }
+        complete = all(built.get(b["id"], 0) == len(b["costs"]) for b in world["buildings"])
+        if not complete or player["world_index"] == len(config["worlds"]) - 1:
+            break
+        # Live ops may append a world after a player finished the old campaign.
+        # Its previous completion reward was already committed; never grant it again.
+        player["world_index"] += 1
+        query(
             conn,
-            "SELECT building_id,level FROM player_buildings WHERE player_id=:p AND world_id=:w",
+            "UPDATE players SET world_index=:w WHERE id=:p",
             p=player_id,
-            w=world["id"],
-        ).mappings()
-    }
+            w=player["world_index"],
+        )
     buildings = [
         dict(
             b,
