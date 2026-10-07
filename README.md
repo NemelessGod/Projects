@@ -19,7 +19,7 @@ client/scenes/        корневая сцена
 scripts/              воспроизводимая установка, запуск, тесты, APK
 .local/               БД и backups; ignored, не коммитить
 build/                debug APK; ignored
- docs/                архитектура, экономика, API, события, roadmap
+docs/                архитектура, экономика, API, события, roadmap
 ```
 
 ## Быстрый запуск в этой среде
@@ -83,12 +83,12 @@ scripts/build_android.sh      # build/spin-kingdom-debug.apk
 source scripts/env.sh
 adb install -r build/spin-kingdom-debug.apk
 adb reverse tcp:8000 tcp:8000
-adb shell am start -n com.starharbor.spinkingdom/org.godotengine.godot.GodotApp
+adb shell am start -n com.starharbor.spinkingdom/com.godot.game.GodotAppLauncher
 ```
 
 SDK устанавливается в `/workspace/tooling/android-sdk`, templates/settings/cache — в writable XDG-каталогах. Путь можно заменить `SPIN_TOOLING_DIR`; путь Java определяется через `java.home` или `SPIN_JAVA_ROOT`. Проверка архивов: официальный SHA-1 Android tools и SHA-512 Godot release. Не отключать TLS/checksum verification. Интернет нужен к PyPI, dl.google.com, GitHub release assets и Docker registry (стандартные package-manager domains).
 
-Debug APK включает arm64-v8a (телефоны) и x86_64 (эмулятор); минимальная версия Android — 7.0/API 24, target — 36. Без ускорения первая загрузка эмулятора может занять много минут. При ограниченной песочнице Android-эмулятор/adb могут требовать writable `.android` и console auth file в домашней папке; служебный грамматический кэш gdtoolkit скрипт перенаправляет в writable XDG. Не менять HOME и не класть токены в setup scripts.
+Debug APK включает arm64-v8a (телефоны) и x86_64 (эмулятор); минимальная версия Android — 7.0/API 24, target — 36. Для headless эмулятора используйте `scripts/run_emulator.sh` в отдельном процессе, дождитесь `adb shell getprop sys.boot_completed` = `1`, затем установите APK. Используется ANGLE/SwiftShader (`-gpu swangle`): старый `-gpu swiftshader` имеет недостаточный лимит shader uniforms для Godot. Без ускорения первая загрузка может занять много минут. При ограниченной песочнице Android-эмулятор/adb могут требовать writable `.android` и console auth file в домашней папке; служебный грамматический кэш gdtoolkit скрипт перенаправляет в writable XDG. Не менять HOME и не класть токены в setup scripts.
 
 Телефон через USB с `adb reverse` использует `http://127.0.0.1:8000`. Без USB задайте доступный backend в debug-профиле. Смена адреса создаёт нового гостя и удаляет локальный ключ старого сервера; не переключайтесь, если нужен прежний аккаунт. Desktop поддерживает `SPIN_API_URL`. Release требует HTTPS в `game/api_url`; production signing, Google-вход и публикация пока не настроены. Debug keystore не подходит для Google Play.
 

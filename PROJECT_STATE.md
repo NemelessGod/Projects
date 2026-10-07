@@ -12,11 +12,11 @@ Godot 4.6.3 portrait island/slot/profile UI, vector symbols and island, tutorial
 
 ## Verified
 
-28 backend tests pass against isolated PostgreSQL 17 `_test` DB (unit, replay/concurrency, authoritative validation, pricing/XP, worlds, expiry/ban and config boundaries). Ruff + GDScript formatting/lint pass. Godot headless real client E2E passes: guest -> spin -> upgrade -> ambiguous-response replay -> restart restore. Native Android debug export passes, arm64/x86_64 APK signature verified. Original SQL and custom-format backups saved under ignored `.local/backups`; data moved to bind-mounted `.local/postgres` and restored; health/profile rechecked.
+28 backend tests pass against isolated PostgreSQL 17 `_test` DB (unit, replay/concurrency, authoritative validation, pricing/XP, worlds, expiry/ban and config boundaries). Ruff + GDScript formatting/lint pass. Godot headless real client E2E passes: guest -> spin -> upgrade -> ambiguous-response replay -> restart restore. Native Android debug export passes, arm64/x86_64 APK signature verified. Linux debug executable built and launched. Unreachable-server transport test passes without JSON parsing errors. Original SQL and custom-format backups saved under ignored `.local/backups`; data moved to bind-mounted `.local/postgres` and restored; health/profile rechecked.
 
 ## Remaining / known limitations
 
-Android runtime check pending. No known failed backend behavior. Regeneration naturally changes energy between delayed restore tests; test permits valid capped regeneration. Original vector placeholders; no audio/provider integrations. Google auth/linking/token recovery, throttling/guest abuse protection, secure keystore storage, HTTPS deployment, production signing, analytics/privacy and physical-device performance tests are not implemented. Authentication expires after 90 days; client reports invalid session without silently replacing account. Losing first guest response may orphan an account. Future feature buttons describe their planned status.
+Android runtime check pending. The emulator's legacy GLES SwiftShader renderer cannot compile Godot shaders (uniform limit); ANGLE/swangle selected in scripts/run_emulator.sh. This is an emulator configuration issue, not a passed runtime check. No known failed backend behavior. Regeneration naturally changes energy between delayed restore tests; test permits valid capped regeneration. Original vector placeholders; no audio/provider integrations. Google auth/linking/token recovery, throttling/guest abuse protection, secure keystore storage, HTTPS deployment, production signing, analytics/privacy and physical-device performance tests are not implemented. Authentication expires after 90 days; client reports invalid session without silently replacing account. Losing first guest response may orphan an account. Future feature buttons describe their planned status.
 
 ## Run
 
@@ -28,4 +28,4 @@ Godot scene workflow chosen over Flutter/Flame for 2D maps/animation; FastAPI/Po
 
 ## Next task
 
-Finish Android runtime validation, record milestone evidence and save reusable environment config. Then PHASE 5: combat server action tickets and shield/attack/raid transactions, with concurrency and replay tests before UI expansion.
+Finish Android runtime validation and record milestone evidence. install_script/start_skill were saved in the cloud draft; review/save/publish by the user is still pending. Fresh-task restoration of local-only commits is unverified. Then PHASE 5: combat server action tickets and shield/attack/raid transactions, with concurrency and replay tests before UI expansion.

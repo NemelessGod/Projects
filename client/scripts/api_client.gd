@@ -30,7 +30,6 @@ func call_api(
 	var reply = await request.request_completed
 	request.queue_free()
 	var code: int = reply[1]
-	var data = JSON.parse_string(reply[3].get_string_from_utf8())
 	if reply[0] != HTTPRequest.RESULT_SUCCESS:
 		return {
 			"ok": false,
@@ -38,6 +37,9 @@ func call_api(
 			"message":
 			"Нет связи с сервером. Результат сохранённого запроса можно повторить безопасно."
 		}
+	var parser = JSON.new()
+	var parsed = parser.parse(reply[3].get_string_from_utf8())
+	var data = parser.data if parsed == OK else null
 	if not data is Dictionary:
 		return {"ok": false, "status": code, "message": "Сервер вернул некорректный ответ."}
 	if code < 200 or code >= 300:

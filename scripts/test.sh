@@ -7,8 +7,8 @@ if ! docker exec spin-kingdom-db psql -p 55432 -U postgres -tAc \
   "SELECT 1 FROM pg_database WHERE datname='spin_kingdom_test'" | rg -q '^1$'; then
   docker exec spin-kingdom-db createdb -p 55432 -U postgres spin_kingdom_test
 fi
-ruff check backend
-ruff format --check backend
+ruff check backend scripts
+ruff format --check backend scripts
 python scripts/gdtool.py format --check client/scripts client/tests
 python scripts/gdtool.py lint client/scripts client/tests
 cd backend
