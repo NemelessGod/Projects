@@ -23,8 +23,10 @@ def migrate():
         for path in sorted((ROOT / "migrations").glob("*.sql")):
             version = int(path.name.split("_")[0])
             if version not in versions:
-                conn.exec_driver_sql(path.read_text())
-        config = validate_config(json.loads((ROOT / "config/economy.v1.json").read_text()))
+                conn.exec_driver_sql(path.read_text(encoding="utf-8"))
+        config = validate_config(
+            json.loads((ROOT / "config/economy.v1.json").read_text(encoding="utf-8"))
+        )
         conn.execute(
             text(
                 "INSERT INTO game_config(revision,body,active) VALUES(:r,CAST(:b AS jsonb),true) ON CONFLICT(revision) DO NOTHING"

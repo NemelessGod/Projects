@@ -10,7 +10,7 @@ from app.service import active_config, query
 
 
 def publish(path: Path):
-    body = validate_config(json.loads(path.read_text()))
+    body = validate_config(json.loads(path.read_text(encoding="utf-8")))
     with engine.begin() as conn:
         query(conn, "SELECT pg_advisory_xact_lock(53190742)")
         old = active_config(conn)

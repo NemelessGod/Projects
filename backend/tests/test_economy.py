@@ -6,7 +6,9 @@ import pytest
 
 from app.economy import progress, regenerate, select_symbols, slot_rewards, upgrade_price
 
-CONFIG = json.loads((Path(__file__).parents[1] / "config/economy.v1.json").read_text())
+CONFIG = json.loads(
+    (Path(__file__).parents[1] / "config/economy.v1.json").read_text(encoding="utf-8")
+)
 NOW = datetime(2026, 1, 1, tzinfo=timezone.utc)
 
 

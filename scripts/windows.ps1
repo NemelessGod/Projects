@@ -4,6 +4,7 @@
     [string]$Godot = "godot"
 )
 $ErrorActionPreference = "Stop"
+$env:PYTHONUTF8 = "1"
 Set-Location (Split-Path $PSScriptRoot -Parent)
 function Run([string]$Program, [string[]]$Arguments) {
     & $Program @Arguments
