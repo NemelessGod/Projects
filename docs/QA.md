@@ -19,3 +19,5 @@ UI follow-up: integer counters formatted without JSON float suffixes; original i
 Emulator limitation: some cold starts stall on the Android launch screen before native Godot initialization; force-stop/relaunch was required. Do not treat the software emulator as a phone startup/performance benchmark. A forced headless exit after 3 frames during pending HTTP requests emitted an ObjectDB cleanup warning; the awaited HTTP smoke/restart tests passed cleanly.
 
 Versioned visual evidence: [initial spin](evidence/android-spin.png), [initial restart](evidence/android-restart.png), [updated APK restore](evidence/android-final-home.png), [updated APK upgrade](evidence/android-final-upgrade.png).
+
+Final current-APK restart: PASS after a retry of the software emulator launch; native UI shows same guest, 166 coins, XP 34, beacon/dock level 1 and 22 energy after legitimate regeneration. Operation counts remain exactly 2 spins/2 upgrades. [Final restart screenshot](evidence/android-final-restart.png).
