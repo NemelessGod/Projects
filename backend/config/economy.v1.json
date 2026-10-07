@@ -1,0 +1,32 @@
+{
+  "revision": 1,
+  "brand": {"title": "Spin Kingdom", "tagline": "Возроди острова звёздного моря"},
+  "initial": {"coins": 300, "premium": 0, "spins": 20, "max_spins": 30},
+  "energy": {"cost": 1, "regeneration_seconds": 300},
+  "limits": {"max_multiplier": 1, "max_shields": 3},
+  "xp": {"base": 50, "growth": 25, "spin": 2, "upgrade": 15, "level_spins": 3},
+  "symbols": [
+    {"id": "coin", "label": "Монета", "rarity": "common", "weight": 45, "coins": 18, "spins": 0, "animation": "glint", "sound": "slot.coin", "behaviour": "reward"},
+    {"id": "bag", "label": "Кошель", "rarity": "common", "weight": 25, "coins": 45, "spins": 0, "animation": "bounce", "sound": "slot.bag", "behaviour": "reward"},
+    {"id": "energy", "label": "Искра", "rarity": "rare", "weight": 16, "coins": 0, "spins": 1, "animation": "pulse", "sound": "slot.energy", "behaviour": "reward"},
+    {"id": "star", "label": "Звезда", "rarity": "rare", "weight": 10, "coins": 70, "spins": 0, "animation": "glint", "sound": "slot.star", "behaviour": "reward"},
+    {"id": "jackpot", "label": "Корона", "rarity": "legendary", "weight": 4, "coins": 120, "spins": 0, "animation": "burst", "sound": "slot.jackpot", "behaviour": "reward"}
+  ],
+  "slot": {"reels": 3, "triple_coin_multiplier": 3},
+  "worlds": [
+    {"id": "starhaven", "name": "Звёздная пристань", "description": "Зажги маяки и верни свет в тихую гавань.", "completion": {"coins": 200, "spins": 8}, "buildings": [
+      {"id": "beacon", "name": "Маяк искр", "costs": [120, 240, 420]},
+      {"id": "dock", "name": "Небесный причал", "costs": [140, 280, 460]},
+      {"id": "garden", "name": "Лунный сад", "costs": [160, 320, 500]},
+      {"id": "workshop", "name": "Мастерская ветра", "costs": [180, 360, 540]},
+      {"id": "observatory", "name": "Обсерватория", "costs": [200, 400, 600]}
+    ]},
+    {"id": "cloudforge", "name": "Кузница облаков", "description": "Построй город среди парящих скал.", "completion": {"coins": 400, "spins": 12}, "buildings": [
+      {"id": "forge", "name": "Звёздная кузня", "costs": [300, 600, 1000]},
+      {"id": "bridge", "name": "Мост рассвета", "costs": [340, 680, 1100]},
+      {"id": "mill", "name": "Ветряная мельница", "costs": [380, 760, 1200]},
+      {"id": "library", "name": "Архив неба", "costs": [420, 840, 1300]},
+      {"id": "palace", "name": "Дворец облаков", "costs": [460, 920, 1400]}
+    ]}
+  ]
+}
