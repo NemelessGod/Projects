@@ -9,7 +9,10 @@
 - [x] Validated remote configuration and compatible revision publishing CLI.
 - [x] 29 PostgreSQL-backed/unit tests; Godot HTTP end-to-end + restart smoke.
 - [x] Frozen Python dependency versions, setup/start/test/build scripts, database backup/restore verification.
-- [IN PROGRESS] Save reusable environment draft and milestone evidence; commit stable client.
+- [x] Save reusable cloud environment draft; stable changes committed locally.
+- [x] Windows 10 PowerShell setup/server/test/client/export workflow; syntax verified and Windows EXE cross-built.
+- [ ] Execute Windows workflow and EXE on the user’s Windows 10 machine.
+- [IN PROGRESS] Complete Android runtime milestone evidence.
 - [ ] PHASE 5: attacks, shields, raids, single-use server action tickets, transactional defender updates.
 - [ ] PHASE 6: chests/cards/sets and atomic claims.
 - [ ] PHASE 7: wheel/daily/missions/achievements.

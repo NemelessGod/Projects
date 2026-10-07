@@ -22,6 +22,41 @@ build/                debug APK; ignored
 docs/                архитектура, экономика, API, события, roadmap
 ```
 
+## Windows 10: запуск и тестирование
+
+Установите Python 3.12 (с launcher `py`), Git, Docker Desktop с Linux containers и Godot 4.6.3 Standard x86_64. Docker Desktop требует поддерживаемую конфигурацию Windows 10 и включённую виртуализацию/WSL 2. Добавьте Godot в PATH под именем `godot` либо передавайте `-Godot "C:\Tools\Godot.exe"`. Откройте PowerShell в корне проекта:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/windows.ps1 setup
+powershell -ExecutionPolicy Bypass -File scripts/windows.ps1 server
+```
+
+Оставьте сервер открытым. В другом окне:
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8000/health
+powershell -ExecutionPolicy Bypass -File scripts/windows.ps1 client -Godot "C:\Tools\Godot.exe"
+powershell -ExecutionPolicy Bypass -File scripts/windows.ps1 test
+```
+
+Windows-скрипт использует Docker named volume `spin-kingdom-data` и localhost port mapping; данные сохраняются после перезапуска. Trust-аутентификация предназначена только для локальной разработки. Bash-скрипты не требуются. Клиент можно также открыть через `client/project.godot` в редакторе.
+
+Для сборки установите **export templates 4.6.3** через Godot → Manage Export Templates:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/windows.ps1 build-windows -Godot "C:\Tools\Godot.exe"
+.\build\spin-kingdom.exe
+```
+
+Для APK дополнительно нужны Android SDK Platform/Build Tools 36 и JDK 21. Укажите SDK и Java в Godot Editor Settings → Export → Android, затем запустите `windows.ps1 build-android`. На USB-телефоне включите USB debugging:
+
+```powershell
+adb install -r build/spin-kingdom-debug.apk
+adb reverse tcp:8000 tcp:8000
+```
+
+Сервер должен работать при запуске игры. Проверьте: гостевой вход → Slot → spin → Home → улучшение маяка → закрытие и повторное открытие клиента; аккаунт и прогресс должны сохраниться. Windows EXE собран в облаке, но запуск PowerShell/Docker Desktop/EXE на Windows 10 здесь не проверен: среда Linux. При переносе скопируйте весь проект; `.venv` создайте заново, облачную Linux `.venv` не копируйте.
+
 ## Быстрый запуск в этой среде
 
 Нужны Python 3.12, Docker daemon, Godot 4.6.3 и Java 21. Они доступны здесь. Используйте существующий checkout `/workspace/Projects`; облачная задача уже изолирована, worktree не нужен.
@@ -88,7 +123,7 @@ adb shell am start -n com.starharbor.spinkingdom/com.godot.game.GodotAppLauncher
 
 SDK устанавливается в `/workspace/tooling/android-sdk`, templates/settings/cache — в writable XDG-каталогах. Путь можно заменить `SPIN_TOOLING_DIR`; путь Java определяется через `java.home` или `SPIN_JAVA_ROOT`. Проверка архивов: официальный SHA-1 Android tools и SHA-512 Godot release. Не отключать TLS/checksum verification. Интернет нужен к PyPI, dl.google.com, GitHub release assets и Docker registry (стандартные package-manager domains).
 
-Debug APK включает arm64-v8a (телефоны) и x86_64 (эмулятор); минимальная версия Android — 7.0/API 24, target — 36. Для headless эмулятора используйте `scripts/run_emulator.sh` в отдельном процессе, дождитесь `adb shell getprop sys.boot_completed` = `1`, затем установите APK. Используется ANGLE/SwiftShader (`-gpu swangle`): старый `-gpu swiftshader` имеет недостаточный лимит shader uniforms для Godot. Без ускорения первая загрузка может занять много минут. По умолчанию выделены 4 ГБ и 4 CPU; на меньшей машине задайте `SPIN_EMULATOR_MEMORY`/`SPIN_EMULATOR_CORES`. После прерывания среды скрипт убирает только lock-файлы доказанно завершённого процесса, сохраняя AVD и гостевой аккаунт. При ограниченной песочнице Android-эмулятор/adb могут требовать writable `.android` и console auth file в домашней папке; служебный грамматический кэш gdtoolkit скрипт перенаправляет в writable XDG. Не менять HOME и не класть токены в setup scripts.
+Debug APK включает arm64-v8a (телефоны) и x86_64 (эмулятор); минимальная версия Android — 7.0/API 24, target — 36. Для headless эмулятора используйте `scripts/run_emulator.sh` в отдельном процессе, дождитесь `adb shell getprop sys.boot_completed` = `1`, затем установите APK. Используется ANGLE/SwiftShader (`-gpu swangle`): старый `-gpu swiftshader` имеет недостаточный лимит shader uniforms для Godot. Без ускорения первая загрузка может занять много минут. По умолчанию используется более лёгкий Android 10/API 29; `SPIN_ANDROID_API=35` выбирает Android 15. По умолчанию выделены 4 ГБ и 4 CPU; на меньшей машине задайте `SPIN_EMULATOR_MEMORY`/`SPIN_EMULATOR_CORES`. После прерывания среды скрипт убирает только lock-файлы доказанно завершённого процесса, сохраняя AVD и гостевой аккаунт. При ограниченной песочнице Android-эмулятор/adb могут требовать writable `.android` и console auth file в домашней папке; служебный грамматический кэш gdtoolkit скрипт перенаправляет в writable XDG. Не менять HOME и не класть токены в setup scripts.
 
 Телефон через USB с `adb reverse` использует `http://127.0.0.1:8000`. Без USB задайте доступный backend в debug-профиле. Смена адреса создаёт нового гостя и удаляет локальный ключ старого сервера; не переключайтесь, если нужен прежний аккаунт. Desktop поддерживает `SPIN_API_URL`. Release требует HTTPS в `game/api_url`; production signing, Google-вход и публикация пока не настроены. Debug keystore не подходит для Google Play.
 
