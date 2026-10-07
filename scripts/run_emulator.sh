@@ -20,10 +20,26 @@ for key, value in [('hw.lcd.width','540'),('hw.lcd.height','960'),('hw.lcd.densi
 p.write_text(s)
 PY
 fi
+# An interrupted cloud process can leave a PID lock pointing to an exited/zombie VM.
+# Remove only proven stale runtime locks, preserving the guest account and disk images.
+python - <<'PYLOCK'
+import os
+from pathlib import Path
+avd = Path(os.environ['ANDROID_AVD_HOME']) / 'spin-test.avd'
+lock = avd / 'hardware-qemu.ini.lock'
+if lock.exists():
+    pid = int(lock.read_text().rstrip(chr(0)).strip())
+    stat = Path(f'/proc/{pid}/stat')
+    if not stat.exists() or stat.read_text().rsplit(')', 1)[1].split()[0] == 'Z':
+        lock.unlink()
+        (avd / 'multiinstance.lock').unlink(missing_ok=True)
+    else:
+        raise SystemExit('This AVD has a running process. Reuse it; do not remove its lock.')
+PYLOCK
 accel=off
 if [[ -r /dev/kvm && -w /dev/kvm ]]; then accel=on; fi
 # ANGLE supports the uniform limits Godot needs; old swiftshader GLES mode does not.
 # Foreground: leave this in a managed process session. May need sandbox home-cache access.
 exec "$ANDROID_HOME/emulator/emulator" -avd spin-test -no-window -no-audio \
-  -no-boot-anim -gpu swangle -accel "$accel" -memory 2048 -cores 2 -no-snapshot \
+  -no-boot-anim -gpu swangle -accel "$accel" -memory "${SPIN_EMULATOR_MEMORY:-4096}" -cores "${SPIN_EMULATOR_CORES:-4}" -no-snapshot \
   -camera-back none -camera-front none -no-metrics
