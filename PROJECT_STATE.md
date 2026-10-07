@@ -1,6 +1,6 @@
 # Project state
 
-Date: 2026-10-07. Repository: `/workspace/Projects`, current branch `work`; remote repository was empty at the start. Commits are local; no push or publication performed.
+Date: 2026-10-07. Repository: `/workspace/Projects`, current branch `work`; remote repository was empty at the start. Initial commits were local. GitHub upload of the project and downloadable archive was explicitly authorized by the user on 2026-10-08; distribution branch: main.
 
 ## Phase
 

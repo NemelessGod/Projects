@@ -1,5 +1,7 @@
 # Spin Kingdom
 
+[Скачать проект для Windows + Android одним ZIP](https://github.com/NemelessGod/Projects/raw/refs/heads/main/downloads/SpinKingdom-Windows-Android.zip) — исходники, сервер, Windows EXE и Android APK. После распаковки следуйте разделу «Windows 10: запуск и тестирование».
+
 Основа оригинальной онлайн casual-игры для вертикального Android: восстановите парящие острова, получайте монеты и искры из трёхбарабанного механизма, улучшайте постройки. Рабочее название легко заменяется.
 
 **Статус: первый вертикальный срез, локальная разработка. NOT PRODUCTION READY.** Поздние игровые системы не выдаются за реализованные. Актуальная проверка: [PROJECT_STATE.md](PROJECT_STATE.md).

@@ -23,4 +23,4 @@ Windows EXE SHA256: `25ffceffba276327fbffa6c195cb5a74e562ebdc3192091da9900dd6688
 
 Windows 10 runtime здесь не проверен (облако Linux). Инструкция и PowerShell workflow: README. В программном Android-эмуляторе без KVM некоторые запуски задерживаются на заставке и требуют повторного запуска; Android 15 OS-службы давали ANR. На физическом устройстве ещё нужно проверить запуск, FPS, память и touch/scroll. Фазы 5–12, Google-вход, восстановление потерянного ключа, коммерческие SDK, production hosting/signing не реализованы.
 
-Исходники и коммиты локальные, GitHub push не выполнен. Настройка install_script/start_skill сохранена в облачный draft, требует Save/Publish в UI среды. Подробная проверка: [docs/QA.md](docs/QA.md). Следующее развитие — серверная combat-механика PHASE 5.
+Первоначально исходники и коммиты были локальными. Пользователь разрешил загрузку проекта и ZIP в GitHub 2026-10-08. Настройка install_script/start_skill сохранена в облачный draft, требует Save/Publish в UI среды. Подробная проверка: [docs/QA.md](docs/QA.md). Следующее развитие — серверная combat-механика PHASE 5.
