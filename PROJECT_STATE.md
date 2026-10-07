@@ -4,7 +4,7 @@ Date: 2026-10-07. Repository: `/workspace/Projects`, current branch `work`; remo
 
 ## Phase
 
-PHASE 0–4 vertical slice implemented. Android debug APK built and signature verified; actual emulator launch/interaction validation is in progress. Do not create MILESTONE_1_COMPLETE.md until Android runtime checks pass.
+MILESTONE 1 / PHASE 0–4 first vertical slice implemented and validated on native Android 10/API 29 emulator: guest -> spin -> building upgrade -> app restart restore. See MILESTONE_1_COMPLETE.md and docs/QA.md. Later systems remain planned.
 
 ## Implemented
 
@@ -16,7 +16,7 @@ Godot 4.6.3 portrait island/slot/profile UI, vector symbols and island, tutorial
 
 ## Remaining / known limitations
 
-Android runtime check pending. The emulator's legacy GLES SwiftShader renderer cannot compile Godot shaders (uniform limit); ANGLE/swangle selected in scripts/run_emulator.sh. This is an emulator configuration issue, not a passed runtime check. No known failed backend behavior. Regeneration naturally changes energy between delayed restore tests; test permits valid capped regeneration. Original vector placeholders; no audio/provider integrations. Google auth/linking/token recovery, throttling/guest abuse protection, secure keystore storage, HTTPS deployment, production signing, analytics/privacy and physical-device performance tests are not implemented. Authentication expires after 90 days; client reports invalid session without silently replacing account. Losing first guest response may orphan an account. Future feature buttons describe their planned status.
+Android 10 native gameplay passed with ANGLE/swangle. Legacy GLES SwiftShader lacks uniform capacity; Android 15 system apps showed ANRs without KVM. API 29 is the software-test default, API 35 optional. Startup and shader compilation can take minutes; physical Android performance and Windows 10 runtime remain unverified. Native UI button detachment warning fixed with hidden/deferred deletion and retested. No known failed backend behavior. Regeneration naturally changes energy between delayed restore tests; test permits valid capped regeneration. Original vector placeholders; no audio/provider integrations. Google auth/linking/token recovery, throttling/guest abuse protection, secure keystore storage, HTTPS deployment, production signing, analytics/privacy and physical-device performance tests are not implemented. Authentication expires after 90 days; client reports invalid session without silently replacing account. Losing first guest response may orphan an account. Future feature buttons describe their planned status.
 
 ## Run
 
@@ -30,4 +30,4 @@ Godot scene workflow chosen over Flutter/Flame for 2D maps/animation; FastAPI/Po
 
 ## Next task
 
-Finish Android runtime validation and record milestone evidence. install_script/start_skill were saved in the cloud draft; review/save/publish by the user is still pending. Fresh-task restoration of local-only commits is unverified. Then PHASE 5: combat server action tickets and shield/attack/raid transactions, with concurrency and replay tests before UI expansion.
+install_script/start_skill were saved in the cloud draft; review/save/publish by the user is still pending. Fresh-task restoration of local-only commits is unverified; source ZIP is available for Windows transfer. Next development: PHASE 5: combat server action tickets and shield/attack/raid transactions, with concurrency and replay tests before UI expansion.

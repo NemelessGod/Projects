@@ -131,7 +131,7 @@ func _build_ui() -> void:
 func _render() -> void:
 	if not session.config.is_empty():
 		brand.text = str(session.config.brand.title).to_upper()
-		spin_button.text = "ВРАЩАТЬ · %s искра" % session.config.energy.cost
+		spin_button.text = "ВРАЩАТЬ · %d искра" % session.config.energy.cost
 	var state = session.state
 	notice.text = "Синхронизация…" if session.busy else session.message
 	notice.modulate = Color.WHITE if session.online else GameUi.GOLD
@@ -145,10 +145,10 @@ func _render() -> void:
 		reel.spinning = session.busy and page == "slot"
 	if state.is_empty():
 		return
-	counters.text = "Монеты  %s    ·    Кристаллы  %s" % [state.coins, state.premium]
+	counters.text = "Монеты  %d    ·    Кристаллы  %d" % [state.coins, state.premium]
 	_update_energy()
 	level.text = (
-		"%s · Уровень %s · XP %s / %s"
+		"%s · Уровень %d · XP %d / %d"
 		% [state.display_name, state.level, state.xp, state.xp_required]
 	)
 	xp_bar.max_value = state.xp_required
@@ -161,22 +161,22 @@ func _render() -> void:
 	var upgrades = 0
 	var maximum = 0
 	for child in building_list.get_children():
+		child.hide()
 		child.queue_free()
-		building_list.remove_child(child)
 	for building in state.world.buildings:
 		upgrades += int(building.level)
 		maximum += building.costs.size()
 		var row = VBoxContainer.new()
 		row.add_child(
 			GameUi.label(
-				"%s · %s / %s" % [building.name, building.level, building.costs.size()], 21
+				"%s · %d / %d" % [building.name, building.level, building.costs.size()], 21
 			)
 		)
 		var button = GameUi.button(
 			(
 				"Построено"
 				if building.next_cost == null
-				else "Улучшить · %s монет" % building.next_cost
+				else "Улучшить · %d монет" % building.next_cost
 			),
 			_upgrade.bind(building.id)
 		)
@@ -225,7 +225,7 @@ func _update_energy() -> void:
 	var timer_text = "запас полон" if session.online else "нет связи"
 	if seconds >= 0:
 		timer_text = "новая через %02d:%02d" % [seconds / 60, seconds % 60]
-	energy.text = "Искры  %s / %s · %s" % [session.state.spins, session.state.max_spins, timer_text]
+	energy.text = "Искры  %d / %d · %s" % [session.state.spins, session.state.max_spins, timer_text]
 
 
 func _navigate(target: String) -> void:
@@ -254,7 +254,7 @@ func _on_outcome(result: Dictionary) -> void:
 			reels[i].reveal(id, title, .35 + i * .2)
 		var reward: Dictionary = result.rewards
 		last_result.text = (
-			"%s+%s монет · +%s искр · +%s XP"
+			"%s+%d монет · +%d искр · +%d XP"
 			% [
 				"Тройное совпадение!\n" if reward.triple else "",
 				reward.coins,
@@ -266,7 +266,7 @@ func _on_outcome(result: Dictionary) -> void:
 		_popup(
 			"Остров стал ярче",
 			(
-				"Здание улучшено. Стоимость: %s монет.\n%s"
+				"Здание улучшено. Стоимость: %d монет.\n%s"
 				% [
 					result.price,
 					(

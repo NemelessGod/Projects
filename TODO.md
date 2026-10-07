@@ -2,7 +2,7 @@
 
 - [x] PHASE 0: stack comparison, modular architecture, economy, database/API/event design.
 - [x] PHASE 1: Godot portrait navigation, original vector island/slot UI, debug Android export.
-- [IN PROGRESS] PHASE 1: launch Android APK and validate actual interactions on emulator.
+- [x] PHASE 1: launch Android APK and validate actual interactions/restart on API 29 emulator.
 - [x] PHASE 2: guest identity, server profile, bearer validation, persisted session and cloud restore.
 - [x] PHASE 3: authoritative weighted slot, energy/regeneration, RewardService, economy ledger, replay safety.
 - [x] PHASE 4: five buildings/world, server prices, XP levels, two worlds and one-time completion.
@@ -12,7 +12,7 @@
 - [x] Save reusable cloud environment draft; stable changes committed locally.
 - [x] Windows 10 PowerShell setup/server/test/client/export workflow; syntax verified and Windows EXE cross-built.
 - [ ] Execute Windows workflow and EXE on the user’s Windows 10 machine.
-- [IN PROGRESS] Complete Android runtime milestone evidence.
+- [x] Complete Android runtime milestone evidence; see MILESTONE_1_COMPLETE.md.
 - [ ] PHASE 5: attacks, shields, raids, single-use server action tickets, transactional defender updates.
 - [ ] PHASE 6: chests/cards/sets and atomic claims.
 - [ ] PHASE 7: wheel/daily/missions/achievements.
