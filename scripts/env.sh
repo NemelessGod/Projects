@@ -1,0 +1,11 @@
+# Source this from repository scripts; do not change HOME or expose credentials.
+SPIN_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export SPIN_TOOLING_DIR="${SPIN_TOOLING_DIR:-/workspace/tooling}"
+export XDG_DATA_HOME="$SPIN_TOOLING_DIR/xdg-data"
+export XDG_CONFIG_HOME="$SPIN_TOOLING_DIR/xdg-config"
+export XDG_CACHE_HOME="$SPIN_TOOLING_DIR/xdg-cache"
+export ANDROID_HOME="$SPIN_TOOLING_DIR/android-sdk"
+export ANDROID_USER_HOME="$SPIN_TOOLING_DIR/home/.android"
+export ANDROID_AVD_HOME="$SPIN_TOOLING_DIR/avd"
+export PATH="$SPIN_ROOT/.venv/bin:$ANDROID_HOME/platform-tools:$PATH"
+mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME"
